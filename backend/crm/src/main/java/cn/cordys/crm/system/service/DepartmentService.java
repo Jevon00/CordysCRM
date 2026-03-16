@@ -264,7 +264,11 @@ public class DepartmentService extends MoveNodeService {
 
         }
 
-        return extOrganizationUserMapper.countUserByDepartmentIds(ids, orgId) <= 0;
+        int userCount = extOrganizationUserMapper.countUserByDepartmentIds(ids, orgId);
+        if (userCount > 0) {
+            throw new GenericException(Translator.get("department_has_user"));
+        }
+        return true;
     }
 
 
